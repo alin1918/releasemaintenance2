@@ -1,0 +1,35 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Maintenance Ticket Notification"}} @-->
+<!--@vars {
+"var date":"Date",
+} @-->
+
+<h1>{{trans "Maintenance Ticket Notification"}}</h1>
+
+<ul>
+    <li>
+        <b>{{trans "Product"}}</b><br />
+        {{var product}}
+    </li>
+    <li>
+        <b>{{trans "Summary:"}}</b><br />
+        {{var summary}}
+    </li>
+    <li>
+        <b>{{trans "Description:"}}</b><br />
+        {{var description}}
+    </li>
+    <li>
+        <b>{{trans "Comments:"}}</b><br />
+        {{var comments}}
+    </li>
+    <li>
+        <b>{{trans "View"}}</b><br />
+        <a href="{{var view}}">{{trans "Login To View Ticket"}}</a>
+    </li>
+</ul>

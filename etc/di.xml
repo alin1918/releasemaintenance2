@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Framework\DB\LoggerInterface" type="Magento\Framework\DB\Logger\File"/>
+    <!-- Automated Grid Start -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <!-- Data Source should be in CompanyName\ModuleName\Model\ResourceModel\ModelName\Grid\Collection -->
+                <item name="maintenance_automated_listing_data_source" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Automated\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SalesIgniter\Maintenance\Model\ResourceModel\Automated\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">simaintenance_automated</argument>
+            <argument name="eventPrefix" xsi:type="string">maintenance_automated_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">maintenance_automated_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Automated</argument>
+        </arguments>
+    </type>
+    <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AutomatedGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <!-- should be CompanyName\ModuleName\Model\ResourceModel\ModelName\Collection -->
+            <argument name="collection" xsi:type="object" shared="false">SalesIgniter\Maintenance\Model\ResourceModel\Automated\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">AutomatedGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <!-- Automated Grid End -->
+
+    <!-- Status Grid Start -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <!-- Data Source should be in CompanyName\ModuleName\Model\ResourceModel\ModelName\Grid\Collection -->
+                <item name="maintenance_status_listing_data_source" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Status\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SalesIgniter\Maintenance\Model\ResourceModel\Status\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">simaintenance_status</argument>
+            <argument name="eventPrefix" xsi:type="string">maintenance_status_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">maintenance_status_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Status</argument>
+        </arguments>
+    </type>
+    <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="StatusGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <!-- should be CompanyName\ModuleName\Model\ResourceModel\ModelName\Collection -->
+            <argument name="collection" xsi:type="object" shared="false">SalesIgniter\Maintenance\Model\ResourceModel\Status\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">StatusGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <!-- Status Grid End -->
+
+    <!-- Technician Grid Start -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <!-- Data Source should be in CompanyName\ModuleName\Model\ResourceModel\ModelName\Grid\Collection -->
+                <item name="maintenance_technician_listing_data_source" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\MaintainerToAdmin\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SalesIgniter\Maintenance\Model\ResourceModel\MaintainerToAdmin\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">simaintenance_maintainer_to_admin</argument>
+            <argument name="eventPrefix" xsi:type="string">maintenance_technician_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">maintenance_technician_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\MaintainerToAdmin</argument>
+        </arguments>
+    </type>
+    <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="TechnicianGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <!-- should be CompanyName\ModuleName\Model\ResourceModel\ModelName\Collection -->
+            <argument name="collection" xsi:type="object" shared="false">SalesIgniter\Maintenance\Model\ResourceModel\MaintainerToAdmin\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">TechnicianGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <!-- Technician Grid End -->
+
+
+    <!-- Template Grid Start -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <!-- Data Source should be in CompanyName\ModuleName\Model\ResourceModel\ModelName\Grid\Collection -->
+                <item name="maintenance_template_listing_data_source" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Template\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SalesIgniter\Maintenance\Model\ResourceModel\Template\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">simaintenance_templates</argument>
+            <argument name="eventPrefix" xsi:type="string">maintenance_template_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">maintenance_template_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Template</argument>
+        </arguments>
+    </type>
+    <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="TemplateGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <!-- should be CompanyName\ModuleName\Model\ResourceModel\ModelName\Collection -->
+            <argument name="collection" xsi:type="object" shared="false">SalesIgniter\Maintenance\Model\ResourceModel\Template\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">TemplateGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <!-- Template Grid End -->
+
+
+    <!-- Ticket Grid Start -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <!-- Data Source should be in CompanyName\ModuleName\Model\ResourceModel\ModelName\Grid\Collection -->
+                <item name="maintenance_ticket_listing_data_source" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Tickets\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="SalesIgniter\Maintenance\Model\ResourceModel\Tickets\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">simaintenance_ticket</argument>
+            <argument name="eventPrefix" xsi:type="string">maintenance_ticket_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">maintenance_ticket_collection</argument>
+            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Tickets</argument>
+        </arguments>
+    </type>
+    <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="TicketGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <!-- should be CompanyName\ModuleName\Model\ResourceModel\ModelName\Collection -->
+            <argument name="collection" xsi:type="object" shared="false">SalesIgniter\Maintenance\Model\ResourceModel\Tickets\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">TicketGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <!-- Ticket Grid End -->
+
+    <!--<type name="SalesIgniter\Rental\Model\Product\Stock">-->
+    <!--<plugin name="afterGetAvailableQuantity" type="SalesIgniter\Maintenance\Plugin\Product\afterStock" sortOrder="1" disabled="false"/>-->
+    <!--</type>-->
+
+</config>

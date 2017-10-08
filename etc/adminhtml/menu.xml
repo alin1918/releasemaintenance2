@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <!-- Maintenance Sub-Menu -->
+        <add id="SalesIgniter_Maintenance::maintenance" title="Maintenance" module="SalesIgniter_Maintenance" parent="SalesIgniter_Rental::rental"
+             resource="SalesIgniter_Maintenance::maintenance" sortOrder="50"/>
+        <add id="SalesIgniter_Maintenance::tickets" title="Tickets" module="SalesIgniter_Maintenance" parent="SalesIgniter_Maintenance::maintenance"
+             resource="SalesIgniter_Maintenance::maintenance" action="salesigniter_maintenance/ticket/index"/>
+        <!--<add id="SalesIgniter_Maintenance::templates" title="Templates" module="SalesIgniter_Maintenance" parent="SalesIgniter_Maintenance::maintenance"-->
+             <!--resource="SalesIgniter_Maintenance::maintenance" action="salesigniter_maintenance/template/index"/>-->
+        <!--<add id="SalesIgniter_Maintenance::automated" title="Automated Periodic Maintenance" module="SalesIgniter_Maintenance" parent="SalesIgniter_Maintenance::maintenance" resource="SalesIgniter_Maintenance::automated" action="salesigniter_maintenance/automated/index"/>-->
+        <add id="SalesIgniter_Maintenance::technicians" title="Technicians" module="SalesIgniter_Maintenance" parent="SalesIgniter_Maintenance::maintenance" resource="SalesIgniter_Maintenance::technicians" action="salesigniter_maintenance/technician/index"/>
+        <add id="SalesIgniter_Maintenance::status" title="Manage Statuses" module="SalesIgniter_Maintenance" parent="SalesIgniter_Maintenance::maintenance" resource="SalesIgniter_Maintenance::status" action="salesigniter_maintenance/status/index"/>
+
+    </menu>
+</config>

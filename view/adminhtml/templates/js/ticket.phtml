@@ -1,0 +1,112 @@
+<script>
+    require([
+        'jquery',
+        'domReady!'
+    ], function ($) {
+        'use strict';
+
+
+        /**
+         * Show start/end dates when specific dates is set to yes
+         */
+
+        function showHideStartEndDate() {
+            var $datesVal = $('#specific_dates').val();
+            if ($datesVal == 0) {
+                $('.field-start_date').hide();
+                $('.field-end_date').hide()
+            } else {
+                $('.field-start_date').show();
+                $('.field-end_date').show()
+            }
+        }
+
+//        showHideStartEndDate();
+//        $('#specific_dates').on('change', function (event) {
+//            showHideStartEndDate();
+//        });
+
+
+        /**
+         * Hide and show serials multi-select based on if there are serials
+         */
+
+        function hideshowserials(data) {
+            if (data && data.length > 0) {
+                console.log('here' + JSON.stringify(data));
+                $(".field-serials").show();
+            } else {
+                $(".field-serials").hide();
+            }
+        }
+
+        /**
+         * Populates serial number multi-select
+         */
+
+        function populateSerials() {
+            var $maintenanceId = $('#ticket_id').val();
+            var datatosend = 'productid=' + $('#product_id').val() + '&maintenanceTicketId=' + $maintenanceId;
+            $.ajax({
+                data: datatosend,
+                //data: {form_key: window.FORM_KEY},
+                cache: false,
+                dataType: 'json',
+                type: 'POST',
+                url: '<?php echo $this->getSerialUrl(); ?>',
+                success: function (data) {
+                    $('#serials').empty();
+                    hideshowserials(data);
+                    $.each(data, function (key, value) {
+                        var $selected = ' ';
+                        if (value.selected == 'yes') {
+                            $selected = ' selected';
+                        }
+                        $('#serials').append($('<option' + $selected + '>').text(value.serialnumber + ' - ' + value.status).attr('value', value.serialnumber));
+                    });
+                }
+            })
+        }
+
+        function checkQtyAvailable() {
+            var dataFormSerializedAsArray = $('#edit_form :input').serializeArray();
+
+            $.ajax({
+                url: '<?php echo $this->getUrlQty(); ?>',
+                data: $.param(dataFormSerializedAsArray),
+                type: 'post',
+                dataType: 'json',
+                beforeSend: function () {
+                    $('body').trigger('processStart');
+
+                },
+                success: function (res) {
+                    $('body').trigger('processStop');
+                    $('.qty_available').html(res.availableQuantity);
+                }
+            });
+        }
+
+        setTimeout(populateSerials, 500);
+
+        /**
+         * Event observer for when product is changed to populate serials
+         */
+        $('#product_id').on('change', function (event) {
+            populateSerials();
+        });
+
+        /**
+         * Add quantity available div to form
+         */
+
+        $('#product_id').parent().after("<div class='qty_available'></div>")
+
+        /**
+         * Product change check available qty
+         */
+        $('#product_id').on('change', checkQtyAvailable);
+
+
+    })
+</script>
