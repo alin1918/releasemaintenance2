@@ -9,8 +9,8 @@
   ],
   "require": {
     "php": "~5.5.0|~5.6.0|~7.0.0",
-    "salesigniter/module-common": "^1.0",
-    "salesigniter/module-rental": "^1.0"
+    "kjavitz/releasecommon2": "^1.0",
+    "kjavitz/releaserental2": "^1.0"
   },
   "autoload": {
     "files": [
