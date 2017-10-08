@@ -1,15 +1,16 @@
 {
-  "name": "salesigniter/module-maintenance",
+  "name": "kjavitz/releasemaintenance2",
   "description": "Salesigniter Maintenance Extension for Magento 2",
   "type": "magento2-module",
-  "version": "1.0.20170101",
+  "version": "1.0.20170202",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
   ],
   "require": {
     "php": "~5.5.0|~5.6.0|~7.0.0",
-    "magento/magento-composer-installer": "*"
+    "salesigniter/module-common": "^1.0",
+    "salesigniter/module-rental": "^1.0"
   },
   "autoload": {
     "files": [

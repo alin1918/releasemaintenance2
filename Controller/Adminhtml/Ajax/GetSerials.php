@@ -2,7 +2,7 @@
 
 namespace SalesIgniter\Maintenance\Controller\Adminhtml\Ajax;
 
-class GetSerials extends \Magento\Backend\App\Action
+class getSerials extends \Magento\Backend\App\Action
 {
     /**
      * Authorization level of a basic admin session
@@ -29,9 +29,10 @@ class GetSerials extends \Magento\Backend\App\Action
      */
     private $resourceHelper;
 
-    protected $_publicActions = ['getserials', 'execute'];
+    protected $_publicActions = ['getserials','execute'];
 
     private $itemFactory;
+
 
     /** @noinspection PhpHierarchyChecksInspection */
     /**
@@ -55,8 +56,7 @@ class GetSerials extends \Magento\Backend\App\Action
         $this->resourceHelper = $resourceHelper;
     }
 
-    protected function _isAllowed()
-    {
+    protected function _isAllowed(){
         return true;
     }
 
@@ -71,7 +71,7 @@ class GetSerials extends \Magento\Backend\App\Action
     {
         $resultJson = $this->resultJsonFactory->create();
         $resultJson->setData(
-            $this->getSerials($this->getRequest()->getParam('productid'), $this->getRequest()->getParam('maintenanceTicketId'))
+            $this->getSerials($this->getRequest()->getParam('productid'),$this->getRequest()->getParam('maintenanceTicketId'))
         );
         return $resultJson;
     }
@@ -80,26 +80,24 @@ class GetSerials extends \Magento\Backend\App\Action
      * Get a list of serials with status of available or
      * maintenance if it is assigned to this ticket id
      *
-     * @param int $productId
-     *
-     * @param     $maintenanceTicketId
+     * @param int    $productId
      *
      * @return array
      */
-    private function getSerials($productId, $maintenanceTicketId)
+    private function getSerials($productId,$maintenanceTicketId)
     {
         $collection = $this->serialDetailsFactory->create()->getCollection();
+//        $collection->addFieldToFilter(
+//            'product_id',
+//            ['eq' => $productId]
+//        )->addFieldToFilter(
+//            'status',
+//            ['eq' => 'available']
+//        );
+        $collection->getSelect()->where('(product_id = ' . $productId . ' AND status = \'available\')  OR (status = \'maintenance\' AND maintenance_ticket_id = ' . $maintenanceTicketId . ')');
 
-        if ($maintenanceTicketId && $maintenanceTicketId != '') {
-            $collection->getSelect()->where('(product_id = ' . $productId . ' AND status = \'available\')  OR (status = \'maintenance\' AND maintenance_ticket_id = ' . $maintenanceTicketId . ')');
-        } else {
-            $collection->getSelect()->where('(product_id = ' . $productId . ' AND status = \'available\')');
-        }
-
-        $data = $collection->getData();
-        if ($maintenanceTicketId && $maintenanceTicketId != '') {
-            $data = $this->addSelectedSerial($data, $maintenanceTicketId);
-        }
+          $data = $collection->getData();
+        $data = $this->addSelectedSerial($data,$maintenanceTicketId);
         return $data;
     }
 
@@ -108,17 +106,13 @@ class GetSerials extends \Magento\Backend\App\Action
      * that the multi-select has it selected
      *
      * @param $data
-     * @param $maintenanceTicketId
-     *
-     * @return
      */
-    private function addSelectedSerial($data, $maintenanceTicketId)
-    {
+    private function addSelectedSerial($data,$maintenanceTicketId){
         $ticket = $this->itemFactory->create()->load($maintenanceTicketId);
-        if ($ticket->hasSerials()) {
-            for ($i = 0; $i < count($data); ++$i) {
-                $serialsArray = explode(',', $ticket->getSerials());
-                if (array_search($data[$i]['serialnumber'], $serialsArray) !== false) {
+        if($ticket->hasSerials()){
+        for($i=0;$i<count($data);++$i){
+                $serialsArray = explode(',',$ticket->getSerials());
+                if(array_search($data[$i]['serialnumber'],$serialsArray) !== false){
                     $data[$i]['selected'] = 'yes';
                 } else {
                     $data[$i]['selected'] = 'no';
@@ -127,4 +121,6 @@ class GetSerials extends \Magento\Backend\App\Action
         }
         return $data;
     }
+
+
 }

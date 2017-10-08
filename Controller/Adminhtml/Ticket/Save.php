@@ -55,13 +55,14 @@ class Save extends Action
 
     private $emailTicket;
 
+
     /**
      * Initialize Group Controller
      *
-     * @param \Magento\Backend\App\Action\Context               $context
-     * @param \Magento\Framework\Registry                       $coreRegistry
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
-     * @param \Magento\Framework\View\Result\PageFactory        $resultPageFactory
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -74,20 +75,20 @@ class Save extends Action
         \SalesIgniter\Rental\Model\Product\Stock $stock,
         \Magento\Catalog\Model\Product\Action $attributeAction,
         \SalesIgniter\Rental\Helper\Calendar $calendarHelper,
-        \Magento\Framework\Locale\ResolverInterface $localeResolver,
         \SalesIgniter\Rental\Api\StockManagementInterface $stockManagement,
         \SalesIgniter\Rental\Api\SerialNumberDetailsRepositoryInterface $serialRepo,
         \SalesIgniter\Rental\Model\SerialNumberDetailsFactory $SerialFactory,
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $date,
         \Magento\Framework\Stdlib\DateTime\DateTime $datetime,
         \SalesIgniter\Maintenance\Model\EmailTicket $emailTicket
-    ) {
+    )
+    {
         $this->emailTicket = $emailTicket;
         $this->date = $date;
         $this->datetime = $datetime;
         $this->SerialFactory = $SerialFactory;
         $this->serialRepo = $serialRepo;
-        $this->localeResolver = $localeResolver;
+        $this->localeResolver = $context->getLocaleResolver();
         $this->calendarHelper = $calendarHelper;
         $this->stockManagement = $stockManagement;
         $this->attributeAction = $attributeAction;
@@ -136,10 +137,11 @@ class Save extends Action
             $data['qty_shipped'] = '';
             $data['qty_cancel'] = '';
             $data['order_type'] = 'maintenance'; // is added to reservationorders table to identify
-            $data['not_use_turnover'] = 1;
+
             // check if status reserves inventory
             $status = $this->statusFactory->create()->load($data['status']);
             if ($status->getReserveInventory() == 1) {
+
 
                 // check if there is an existing reservation
                 if ($maintenanceTicket->getReservationorderId() != null || $maintenanceTicket->getReservationorderId() != '') {
@@ -161,7 +163,7 @@ class Save extends Action
             $maintenanceTicket->setData($data);
             $data['ticket_id'] = $maintenanceTicket->save()->getId();
             $this->updateSerials($data);
-            if (isset($data['emailmaintainer'])) {
+            if(isset($data['emailmaintainer'])){
                 $this->emailTicket->send($data);
             }
             $this->messageManager->addSuccessMessage(__('Saved maintenance ticket.'));

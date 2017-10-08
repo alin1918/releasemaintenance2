@@ -2,14 +2,14 @@
 /**
  * Edit demo item form
  *
- * @package   Genmato_Sample
- * @author    Vladimir Kerkhoff <support@genmato.com>
- * @created   2015-11-16
+ * @package Genmato_Sample
+ * @author  Vladimir Kerkhoff <support@genmato.com>
+ * @created 2015-11-16
  * @copyright Copyright (c) 2015 Genmato BV, https://genmato.com.
  */
-
 namespace SalesIgniter\Maintenance\Block\Adminhtml\Ticket\Edit;
 
+use Magento\Customer\Controller\RegistryConstants;
 use Magento\Backend\Block\Widget\Form\Generic;
 
 class Form extends Generic
@@ -31,15 +31,16 @@ class Form extends Generic
     protected $_status;
 
     protected $_yesno;
-
+    
     public $urlBuilder;
+
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry             $registry
-     * @param \Magento\Framework\Data\FormFactory     $formFactory
-     * @param \Genmato\Sample\Model\DemoFactory       $demoDataFactory
-     * @param array                                   $data
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @param \Genmato\Sample\Model\DemoFactory $demoDataFactory
+     * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -87,6 +88,7 @@ class Form extends Generic
         }
 
         $fieldset = $form->addFieldset('base_fieldset', ['legend' => __('Ticket Information')]);
+
 
         $productOptions = $this->productSource->getAllOptions();
 
@@ -147,7 +149,7 @@ class Form extends Generic
                 'label' => __('Product'),
                 'title' => __('Product'),
                 'required' => true,
-                'values' => $productOptions
+                'values'    =>  $productOptions
             ]
         );
 
@@ -230,7 +232,7 @@ class Form extends Generic
                 'label' => __('Technician'),
                 'title' => __('Technician'),
                 'required' => true,
-                'values' => $maintainers
+                'values'   => $maintainers
             ]
         );
 
@@ -242,9 +244,43 @@ class Form extends Generic
                 'label' => __('Email Maintainer?'),
                 'title' => __('Email Maintainer?'),
                 'required' => false,
-                'values' => [
-                    ['value' => 'yes', 'label' => __('Notify Maintainer')]
-                ]
+                'values'    =>  [
+                    ['value' => 'yes','label' => __('Notify Maintainer')]
+                    ]
+            ]
+        );
+
+        $yesno = $this->_yesno->toOptionArray();
+
+//        $fieldset->addField(
+//            'specific_dates',
+//            'select',
+//            [
+//                'name' => 'specific_dates',
+//                'label' => __('Specific Dates'),
+//                'title' => __('Specific Dates'),
+//                'required' => true,
+//                'values' => $yesno
+//            ]
+//        );
+
+
+
+        $fieldset->addField(
+            'start_date_orig',
+            'hidden',
+            [
+                'name' => 'start_date_orig',
+                'required' => false
+            ]
+        );
+
+        $fieldset->addField(
+            'end_date_orig',
+            'hidden',
+            [
+                'name' => 'end_date_orig',
+                'required' => false
             ]
         );
 
@@ -272,6 +308,16 @@ class Form extends Generic
         );
 
         $fieldset->addField(
+            'quantity_already_reserved',
+            'hidden',
+            [
+                'name' => 'quantity_already_reserved',
+                'required' => false
+            ]
+        );
+
+
+        $fieldset->addField(
             'product_id_orig',
             'hidden',
             [
@@ -289,23 +335,24 @@ class Form extends Generic
             ]
         );
 
+
         if ($itemData->getReservationorderId() !== null) {
             // If edit add reservationorder id
             $form->addField('reservationorder_id', 'hidden', ['name' => 'reservationorder_id', 'value' => $itemData->getId()]);
-            $form->addField('reservation_id', 'hidden', ['name' => 'reservation_id', 'value' => $itemData->getId()]);
         }
 
         if ($this->_backendSession->getItemData()) {
             $form->addValues($this->_backendSession->getItemData());
             $this->_backendSession->setItemData(null);
         } else {
-            if ($itemData->hasStatus() == false) {
+            if($itemData->hasStatus() == false){
                 $defaultStatus = '2';
             } else {
                 $defaultStatus = $itemData->getStatus();
             }
             $form->addValues(
                 [
+                    'quantity_already_reserved' => $itemData->getQuantity(),
                     'skiputc' => '1',
                     'ticket_id' => $itemData->getTicketId(),
                     'date_added' => $itemData->getDateAdded(),
@@ -319,12 +366,13 @@ class Form extends Generic
                     'comments' => $itemData->getComments(),
                     'start_date' => $itemData->getStartDate(),
                     'end_date' => $itemData->getEndDate(),
+                    'start_date_orig' => $itemData->getStartDate(),
+                    'end_date_orig' => $itemData->getEndDate(),
                     'maintainer_id' => $itemData->getMaintainerId(),
                     'status' => $defaultStatus,
                     'added_from' => 'admin',
                     'specific_dates' => $itemData->getSpecificDates(),
-                    'reservationorder_id' => $itemData->getReservationorderId(),
-                    'reservation_id' => $itemData->getReservationorderId()
+                    'reservationorder_id' => $itemData->getReservationorderId()
                 ]
             );
         }
@@ -335,4 +383,5 @@ class Form extends Generic
         $form->setMethod('post');
         $this->setForm($form);
     }
+
 }

@@ -6,6 +6,7 @@
         'use strict';
 
 
+
         /**
          * Show start/end dates when specific dates is set to yes
          */
@@ -32,11 +33,10 @@
          */
 
         function hideshowserials(data) {
-            if (data && data.length > 0) {
-                console.log('here' + JSON.stringify(data));
-                $(".field-serials").show();
-            } else {
+            if (data == '') {
                 $(".field-serials").hide();
+            } else {
+                $(".field-serials").show();
             }
         }
 
@@ -55,11 +55,12 @@
                 type: 'POST',
                 url: '<?php echo $this->getSerialUrl(); ?>',
                 success: function (data) {
+                    console.log(data);
                     $('#serials').empty();
                     hideshowserials(data);
                     $.each(data, function (key, value) {
                         var $selected = ' ';
-                        if (value.selected == 'yes') {
+                        if(value.selected == 'yes'){
                             $selected = ' selected';
                         }
                         $('#serials').append($('<option' + $selected + '>').text(value.serialnumber + ' - ' + value.status).attr('value', value.serialnumber));
@@ -105,7 +106,8 @@
         /**
          * Product change check available qty
          */
-        $('#product_id').on('change', checkQtyAvailable);
+        $('#product_id').on('change',checkQtyAvailable);
+
 
 
     })

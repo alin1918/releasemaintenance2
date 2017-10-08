@@ -45,12 +45,12 @@
         </arguments>
     </type>
     <type name="SalesIgniter\Maintenance\Model\ResourceModel\Status\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">simaintenance_status</argument>
-            <argument name="eventPrefix" xsi:type="string">maintenance_status_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">maintenance_status_collection</argument>
-            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Status</argument>
-        </arguments>
+    <arguments>
+    <argument name="mainTable" xsi:type="string">simaintenance_status</argument>
+    <argument name="eventPrefix" xsi:type="string">maintenance_status_grid_collection</argument>
+    <argument name="eventObject" xsi:type="string">maintenance_status_collection</argument>
+    <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Status</argument>
+    </arguments>
     </type>
     <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
@@ -79,12 +79,12 @@
         </arguments>
     </type>
     <type name="SalesIgniter\Maintenance\Model\ResourceModel\MaintainerToAdmin\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">simaintenance_maintainer_to_admin</argument>
-            <argument name="eventPrefix" xsi:type="string">maintenance_technician_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">maintenance_technician_collection</argument>
-            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\MaintainerToAdmin</argument>
-        </arguments>
+    <arguments>
+    <argument name="mainTable" xsi:type="string">simaintenance_maintainer_to_admin</argument>
+    <argument name="eventPrefix" xsi:type="string">maintenance_technician_grid_collection</argument>
+    <argument name="eventObject" xsi:type="string">maintenance_technician_collection</argument>
+    <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\MaintainerToAdmin</argument>
+    </arguments>
     </type>
     <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
@@ -114,12 +114,12 @@
         </arguments>
     </type>
     <type name="SalesIgniter\Maintenance\Model\ResourceModel\Template\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">simaintenance_templates</argument>
-            <argument name="eventPrefix" xsi:type="string">maintenance_template_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">maintenance_template_collection</argument>
-            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Template</argument>
-        </arguments>
+    <arguments>
+    <argument name="mainTable" xsi:type="string">simaintenance_templates</argument>
+    <argument name="eventPrefix" xsi:type="string">maintenance_template_grid_collection</argument>
+    <argument name="eventObject" xsi:type="string">maintenance_template_collection</argument>
+    <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Template</argument>
+    </arguments>
     </type>
     <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
@@ -149,12 +149,12 @@
         </arguments>
     </type>
     <type name="SalesIgniter\Maintenance\Model\ResourceModel\Tickets\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">simaintenance_ticket</argument>
-            <argument name="eventPrefix" xsi:type="string">maintenance_ticket_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">maintenance_ticket_collection</argument>
-            <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Tickets</argument>
-        </arguments>
+    <arguments>
+    <argument name="mainTable" xsi:type="string">simaintenance_ticket</argument>
+    <argument name="eventPrefix" xsi:type="string">maintenance_ticket_grid_collection</argument>
+    <argument name="eventObject" xsi:type="string">maintenance_ticket_collection</argument>
+    <argument name="resourceModel" xsi:type="string">SalesIgniter\Maintenance\Model\ResourceModel\Tickets</argument>
+    </arguments>
     </type>
     <virtualType name="GridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
@@ -174,7 +174,7 @@
     <!-- Ticket Grid End -->
 
     <!--<type name="SalesIgniter\Rental\Model\Product\Stock">-->
-    <!--<plugin name="afterGetAvailableQuantity" type="SalesIgniter\Maintenance\Plugin\Product\afterStock" sortOrder="1" disabled="false"/>-->
+        <!--<plugin name="afterGetAvailableQuantity" type="SalesIgniter\Maintenance\Plugin\Product\afterStock" sortOrder="1" disabled="false"/>-->
     <!--</type>-->
 
 </config>
