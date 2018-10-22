@@ -54,7 +54,8 @@ class Save extends Action
     private $datetime;
 
     private $emailTicket;
-
+    
+    protected $productFactory;
 
     /**
      * Initialize Group Controller
@@ -80,9 +81,9 @@ class Save extends Action
         \SalesIgniter\Rental\Model\SerialNumberDetailsFactory $SerialFactory,
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $date,
         \Magento\Framework\Stdlib\DateTime\DateTime $datetime,
-        \SalesIgniter\Maintenance\Model\EmailTicket $emailTicket
-    )
-    {
+        \SalesIgniter\Maintenance\Model\EmailTicket $emailTicket,
+        \Magento\Catalog\Model\ProductFactory $productFactory
+    ) {
         $this->emailTicket = $emailTicket;
         $this->date = $date;
         $this->datetime = $datetime;
@@ -100,6 +101,7 @@ class Save extends Action
         parent::__construct($context);
         $this->resultForwardFactory = $resultForwardFactory;
         $this->resultPageFactory = $resultPageFactory;
+        $this->productFactory = $productFactory;
     }
 
     /**
@@ -120,7 +122,7 @@ class Save extends Action
         $id = $this->getRequest()->getParam('ticket_id');
         $resultRedirect = $this->resultRedirectFactory->create();
         $redirectPath = 'salesigniter_maintenance/ticket';
-        try {
+        try {            
             if ($id !== null) {
                 $maintenanceTicket = $this->ticketFactory->create()->load((int)$id);
             } else {
@@ -132,6 +134,15 @@ class Save extends Action
             } else {
                 $data['serials'] = '';
             }
+
+            $prod = $this->productFactory->create()->load($data['product_id']);	            
+            if ($prod) {
+                if ($data['quantity'] > $prod->getSirentQuantity()) {
+                    $redirectPath = 'salesigniter_maintenance/ticket/edit';
+                    throw new \Magento\Framework\Exception\LocalizedException(__('Quantity is invalid'));
+                }                
+            }            
+            
             $data['serials_shipped'] = $data['serials']; // to match reservationsorders column name
             $data['qty'] = $data['quantity']; // saveFromArray expects 'qty' as field not 'quantity'
             $data['qty_shipped'] = '';
